@@ -13,9 +13,15 @@ def apply_rules(rules):
 		protocol = rule['type']
 
 		if (protocol == 'tcp' or protocol == 'both'):
-			os.system('iptables -t nat -A PREROUTING -p tcp -s ' + source_ip + ' --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
+			if (source_ip == '0.0.0.0'):
+				os.system('iptables -t nat -A PREROUTING -p tcp --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
+			else:
+				os.system('iptables -t nat -A PREROUTING -p tcp -s ' + source_ip + ' --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
 		if (protocol == 'udp' or protocol == 'both'):
-			os.system('iptables -t nat -A PREROUTING -p udp -s ' + source_ip + ' --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
+			if (source_ip == '0.0.0.0'):
+				os.system('iptables -t nat -A PREROUTING -p udp --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
+			else:
+				os.system('iptables -t nat -A PREROUTING -p udp -s ' + source_ip + ' --dport' + source_port + ' -j REDIRECT --to ' + dest_ip + ':' + dest_port)
 
 def main():
 	rules = []
