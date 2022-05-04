@@ -1,5 +1,5 @@
 # This is an example Systemd service file
-# You must edit this file before installing it to /etc/systemd/
+# You must edit this file before installing it to /etc/systemd/system
 [Unit]
 Description=Run proxpf after network becomes reachable
 After=network.target
@@ -7,7 +7,8 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAFterExit=yes
-ExecStart=<pathToProxpf>/proxpf.py
+WorkingDirectory=/path/to/proxpf/install
+ExecStart=/usr/bin/env poetry run python proxpf.py
 
 [Install]
 WantedBy=default.target
