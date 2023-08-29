@@ -2,10 +2,12 @@ rules:
   - {
     source: '0.0.0.0:80',
     dest: '10.0.0.2:80',
-    type: 'tcp'
+    type: 'tcp',
+    interface: 'eth0'
     }
   - {
     source: '0.0.0.0:443',
     dest: '10.0.0.2:443',
-    type: 'tcp'
+    type: 'tcp',
+    interface: 'eth0'
     }
