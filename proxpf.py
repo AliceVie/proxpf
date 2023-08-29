@@ -13,17 +13,18 @@ def apply_rules(rules):
         dest_ip = rule['dest'].split(':')[0]
         dest_port = rule['dest'].split(':')[1]
         protocol = rule['type']
+        interface = rule['interface']
 
         if (protocol == 'tcp' or protocol == 'both'):
             if (source_ip == '0.0.0.0'):
-                os.system('iptables -t nat -A PREROUTING -p tcp --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port)
+                os.system('iptables -t nat -A PREROUTING -p tcp --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port + ' -i ' + interface)
             else:
-                os.system('iptables -t nat -A PREROUTING -p tcp -s ' + source_ip + ' --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port)
+                os.system('iptables -t nat -A PREROUTING -p tcp -s ' + source_ip + ' --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port + ' -i ' + interface)
         if (protocol == 'udp' or protocol == 'both'):
             if (source_ip == '0.0.0.0'):
-                os.system('iptables -t nat -A PREROUTING -p udp --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port)
+                os.system('iptables -t nat -A PREROUTING -p udp --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port + ' -i ' + interface)
             else:
-                os.system('iptables -t nat -A PREROUTING -p udp -s ' + source_ip + ' --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port)
+                os.system('iptables -t nat -A PREROUTING -p udp -s ' + source_ip + ' --dport ' + source_port + ' -j DNAT --to ' + dest_ip + ':' + dest_port + ' -i ' + interface)
 
 def main():
     rules = []
